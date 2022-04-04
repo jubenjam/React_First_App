@@ -85,3 +85,17 @@ function addUser(user){
     users['users_list'].push(user);
 }
 
+function removeUserById(id) {
+    index = users['users_list'].indexOf(findUserById(id));
+    if(index != -1)
+        return users['users_list'].splice(index , 1); 
+    return
+}
+
+app.delete('/users/:id', (req, res) => {
+    const id = req.params['id']; //or req.params.id
+    let result = removeUserById(id);
+    if (result === undefined || result.length == 0)
+        res.status(404).send('Resource not found.');
+    res.status(204).end();
+});
