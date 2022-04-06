@@ -14,12 +14,28 @@ function MyApp() {
     }, [] );
 
     function removeOneCharacter (index) {
-        const updated = characters.filter((character, i) => {
-            return i !== index
+        removeUser(index).then( result => {
+            if (result && result.status === 204){
+                const updated = characters.filter((character, i) => {
+                    return i !== index
+                });
+                setCharacters(updated);
+            } 
+
         });
-        setCharacters(updated);
     }
-    
+
+    async function removeUser (index) {
+        try {
+            const response = await axios.delete('http://localhost:5000/users/'.concat(characters[index]['id']));
+            return response;
+        }
+        catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
     async function fetchAll(){
         try {
             const response = await axios.get('http://localhost:5000/users');
