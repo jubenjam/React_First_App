@@ -27,7 +27,7 @@ function MyApp() {
 
     async function removeUser (index) {
         try {
-            const response = await axios.delete('http://localhost:5000/users/'.concat(characters[index]['id']));
+            const response = await axios.delete('http://localhost:5000/users/'.concat(characters[index]['_id']));
             return response;
         }
         catch (error) {
