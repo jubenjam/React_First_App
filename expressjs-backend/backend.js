@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const port = 5000;
+const cors = require('cors');
+
+app.use(cors());
 
 app.use(express.json());
 
@@ -96,9 +99,14 @@ function findUserById(id) {
 
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
+    userToAdd['id'] = randomId();
     addUser(userToAdd);
-    res.status(200).end();
+    res.status(201).send(userToAdd);
 });
+
+function randomId(){
+    return Math.random().toString(36).substring(2, 8);
+}
 
 function addUser(user){
     users['users_list'].push(user);
